@@ -1,0 +1,48 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+interface PlayerDao
+{
+    + getAllPlayers():List<PlayerData>
+    + updatePlayer(PlayerData player):void
+    + deletePlayer(int rank):void
+    + addPlayer(PlayerData player):void
+    + clear():void
+    + save():void
+    + size():void
+    + updatePlayer(PlayerData player):void
+    + ShowData():String
+}
+
+class PlayerDaoImpl
+{
+    - players : List<PlayerData>
+    - path : Path
+    + PlayerDaoImpl(int gamemode)
+    + getAllPlayers():List<PlayerData>
+    + updatePlayer(PlayerData player):void
+    + deletePlayer(int rank):void
+    + addPlayer(PlayerData player):void
+    + clear():void
+    + save():void
+    + size():void
+    + updatePlayer(PlayerData player):void
+    + ShowData():String
+}
+PlayerDao<|..PlayerDaoImpl
+
+class PlayerData
+{
+    -{static} format : SimpleDateFormat
+    - name :String
+    - score : int
+    - dateTime: Date
+
+    + PlayerData(String name, int score, Date dateTime)
+    + getName():String
+    + getScore():int
+    + getTime():Date
+    + toString():String
+}
+PlayerDaoImpl-->PlayerData
+@enduml

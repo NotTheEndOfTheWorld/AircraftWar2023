@@ -1,0 +1,50 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class TemplateMethod{}
+TemplateMethod ..> Game
+
+abstract Game{
+    + Game():void
+    - action():void
+    #{static} cycleDurationForEnemy:int
+    #{static} MobProbolility:double
+    #{static} enemyMaxNumber:int
+    # increaseDifficulty():void
+    #{abstract}scoreCheck()
+    # increaseEnemyProperty(EnemyFactory factory) :void
+
+}
+
+class EasyGame {
+    + EasyGame():void
+    # increaseDifficulty():void
+    # scoreCheck()
+}
+Game <|--EasyGame
+
+class OrdinaryGame {
+    - bossDivergentShootNum:int
+    - bossMaxDivergentShootNum:int
+    + OrdinaryGame():void
+    # increaseDifficulty():void
+    # scoreCheck()
+    # increaseEnemyProperty(EnemyFactory factory) :void
+}
+Game <|--OrdinaryGame
+
+class HardGame {
+    - bossStraightShootNum:int
+    - bossDivergentShootNum:int
+    - bossMaxStraightShootNum:int
+    - bossMaxDivergentShootNum:int
+    - bossHpInc:int
+    - CreatBossThreshold:int
+    + HardGame():void
+    # increaseDifficulty():void
+    # scoreCheck()
+    # increaseEnemyProperty(EnemyFactory factory) :void
+}
+Game <|--HardGame
+
+@enduml

@@ -1,0 +1,96 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+
+abstract class AbstractEnemy {
+    # score:int
+    + AbstractEnemy(int locationX, int locationY, int speedX, int speedY)
+    + {abstract}getScore():int
+    + {abstract}getItem():List<AbstractItem>
+    + {abstract}bombUpdate():void
+}
+
+
+class MobEnemy {
+    - score:int
+    + MobEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
+    + forward():void
+    + shoot():List<BaseBullet>
+    + getScore():int
+    + getItem():List<AbstractItem>
+    + bombUpdate():void
+
+}
+AbstractEnemy <|-- MobEnemy
+
+class EliteEnemy {
+    - score:int
+    + EliteEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
+    + forward():void
+    + shoot():List<BaseBullet>
+    + getScore():int
+    + getItem():List<AbstractItem>
+    + bombUpdate():void
+}
+
+AbstractEnemy <|-- EliteEnemy
+
+class BossEnemy {
+    - score:int
+    + BossEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
+    + forward():void
+    + shoot():List<BaseBullet>
+    + getScore():int
+    + getItem():List<AbstractItem>
+    + bombUpdate():void
+}
+
+AbstractEnemy <|-- BossEnemy
+
+
+
+interface EnemyFactory{
+    + {abstract}creatEnemy():AbstractEnemy
+    + {abstract}increaseProperty(int hpInc,int SpeedYInc):void
+}
+EnemyFactory ..> AbstractEnemy
+
+class MobEnemyFactory {
+    - speedX:int
+    - speedY:int
+    - hp:int
+    - maxSpeedY:int
+    - maxHp: int
+    + creatEnemy():AbstractEnemy
+    + increaseProperty(int hpInc,int SpeedYInc):void
+}
+MobEnemyFactory..> MobEnemy
+EnemyFactory <|.. MobEnemyFactory
+
+
+class EliteEnemyFactory {
+    - speedX:int
+    - speedY:int
+    - hp:int
+    - maxSpeedY:int
+    - maxHp: int
+    + creatEnemy():AbstractEnemy
+    + increaseProperty(int hpInc,int SpeedYInc):void
+}
+EliteEnemyFactory..>EliteEnemy
+EnemyFactory <|.. EliteEnemyFactory
+
+
+class BossEnemyFactory {
+    - speedX:int
+    - speedY:int
+    - hp:int
+    - maxSpeedY:int
+    - maxHp: int
+    + creatEnemy():AbstractEnemy
+    + increaseProperty(int hpInc,int SpeedYInc):void
+}
+BossEnemyFactory..>BossEnemy
+EnemyFactory <|.. BossEnemyFactory
+
+@enduml

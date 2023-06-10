@@ -1,0 +1,45 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+abstract class AbstractAircraft
+{
+    # shootStragety:BaseShootStragety
+    + AbstractAircraft(int locationX, int locationY, int speedX, int speedY, int hp)
+    + {abstract} shoot():List<BaseBullet>
+    + setStragety(BaseShootStragety shootStragety):void
+ }
+AbstractAircraft o--> BaseShootStragety
+
+interface BaseShootStragety
+{
+    + shoot(AbstractAircraft aircraft,boolean isHero):List<BaseBullet>
+}
+
+class StraightShootStragety
+{
+    - shootNum : int
+    + StraightShootStragety(int shootNum):void
+    + shoot(AbstractAircraft aircraft,boolean isHero):List<BaseBullet>
+}
+BaseShootStragety <|.. StraightShootStragety
+
+class DivergentShootStragety
+{
+    - shootNum : int
+    + DivergentShootStragety(int shootNum):void
+    + shoot(AbstractAircraft aircraft,boolean isHero):List<BaseBullet>
+}
+BaseShootStragety <|.. DivergentShootStragety
+
+class StrDivShootStragety
+{
+    - strShootNum :int
+    - divShootNum :int
+    - MaxStraightShootNum:int
+    - MaxDivergentShootNum:int
+    + StrDivShootStragety(int strShootNum,int divShootNum):void
+    + shoot(AbstractAircraft aircraft,boolean isHero):List<BaseBullet>
+}
+BaseShootStragety <|.. StrDivShootStragety
+
+@enduml

@@ -1,10 +1,15 @@
 package edu.hitsz.application;
 
 
+import edu.hitsz.aircraft.EnemyAircraft.BossEnemy;
+import edu.hitsz.aircraft.EnemyAircraft.EliteEnemy;
 import edu.hitsz.aircraft.HeroAircraft;
-import edu.hitsz.aircraft.MobEnemy;
+import edu.hitsz.aircraft.EnemyAircraft.MobEnemy;
 import edu.hitsz.bullet.EnemyBullet;
 import edu.hitsz.bullet.HeroBullet;
+import edu.hitsz.item.AddHpItem;
+import edu.hitsz.item.BombItem;
+import edu.hitsz.item.BulletItem;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -29,9 +34,17 @@ public class ImageManager {
 
     public static BufferedImage BACKGROUND_IMAGE;
     public static BufferedImage HERO_IMAGE;
+
     public static BufferedImage HERO_BULLET_IMAGE;
     public static BufferedImage ENEMY_BULLET_IMAGE;
+
     public static BufferedImage MOB_ENEMY_IMAGE;
+    public static BufferedImage ELITE_ENEMY_IMAGE;
+    public static BufferedImage BOSS_ENEMY_IMAGE;
+
+    public static BufferedImage ADDHP_ITEM_IMAGE;
+    public static BufferedImage BULLET_ITEM_IMAGE;
+    public static BufferedImage BOMB_ITEM_IMAGE;
 
     static {
         try {
@@ -40,13 +53,28 @@ public class ImageManager {
 
             HERO_IMAGE = ImageIO.read(new FileInputStream("src/images/hero.png"));
             MOB_ENEMY_IMAGE = ImageIO.read(new FileInputStream("src/images/mob.png"));
+            ELITE_ENEMY_IMAGE = ImageIO.read(new FileInputStream("src/images/elite.png"));
+            BOSS_ENEMY_IMAGE = ImageIO.read(new FileInputStream("src/images/boss.png"));
             HERO_BULLET_IMAGE = ImageIO.read(new FileInputStream("src/images/bullet_hero.png"));
             ENEMY_BULLET_IMAGE = ImageIO.read(new FileInputStream("src/images/bullet_enemy.png"));
 
+            ADDHP_ITEM_IMAGE = ImageIO.read(new FileInputStream("src/images/prop_blood.png"));
+            BULLET_ITEM_IMAGE = ImageIO.read(new FileInputStream("src/images/prop_bullet.png"));
+            BOMB_ITEM_IMAGE = ImageIO.read(new FileInputStream("src/images/prop_bomb.png"));
+
+
             CLASSNAME_IMAGE_MAP.put(HeroAircraft.class.getName(), HERO_IMAGE);
             CLASSNAME_IMAGE_MAP.put(MobEnemy.class.getName(), MOB_ENEMY_IMAGE);
+            CLASSNAME_IMAGE_MAP.put(EliteEnemy.class.getName(), ELITE_ENEMY_IMAGE);
+            CLASSNAME_IMAGE_MAP.put(BossEnemy.class.getName(), BOSS_ENEMY_IMAGE);
             CLASSNAME_IMAGE_MAP.put(HeroBullet.class.getName(), HERO_BULLET_IMAGE);
             CLASSNAME_IMAGE_MAP.put(EnemyBullet.class.getName(), ENEMY_BULLET_IMAGE);
+
+            CLASSNAME_IMAGE_MAP.put(AddHpItem.class.getName(), ADDHP_ITEM_IMAGE);
+            CLASSNAME_IMAGE_MAP.put(BulletItem.class.getName(), BULLET_ITEM_IMAGE);
+            CLASSNAME_IMAGE_MAP.put(BombItem.class.getName(), BOMB_ITEM_IMAGE);
+
+
 
         } catch (IOException e) {
             e.printStackTrace();

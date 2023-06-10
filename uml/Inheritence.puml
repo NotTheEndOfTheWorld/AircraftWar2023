@@ -1,0 +1,169 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+abstract class AbstractFlyingObject
+{
+    # locationX:int
+    # locationY:int
+    # speedX:int
+    # speedY:int
+    # image:BufferedImage
+    # width:int
+    # height:int
+    # isValid:boolean
+
+    + AbstractFlyingObject(int locationX, int locationY, int speedX, int speedY)
+    + forward():void
+    + crash(AbstractFlyingObject flyingObject):boolean
+    + setLocation(double locationX, double locationY):void
+    + getLocationX():int
+    + getLocationY():int
+    + getSpeedY():int
+    + getImage():BufferedImage
+    + getWidth():int
+    + getHeight():int
+    + notValid():boolean
+    + vanish():void
+}
+
+abstract class AbstractAircraft
+{
+	# maxHp:int
+    # hp:int
+    # shootStragety:BaseShootStragety
+    + AbstractAircraft(int locationX, int locationY, int speedX, int speedY, int hp)
+    + decreaseHp(int decrease):void
+    + getHp():int
+    + {abstract} shoot():List<BaseBullet>
+    + setStragety(BaseShootStragety shootStragety):void
+ }
+
+
+class HeroAircraft {
+    - {static}heroAircraft:HeroAircraft
+    - bulletThread:Thread
+    - fireItemCount:int
+    - updateFirePerItem:int
+    - shootNum:int
+    - HeroAircraft(int locationX, int locationY, int speedX, int speedY, int hp)
+    + {static} getHeroAircraft():HeroAircraft
+    + forward():void
+    + shoot():List<BaseBullet>
+    + increaseHp(int addHp):void
+    + Bomb():void
+    + Bullet():void
+}
+AbstractAircraft <|-- HeroAircraft
+
+
+
+abstract class AbstractEnemy {
+    # score:int
+    + AbstractEnemy(int locationX, int locationY, int speedX, int speedY)
+    + {abstract}getScore():int
+    + {abstract}getItem():List<AbstractItem>
+}
+AbstractAircraft <|-- AbstractEnemy
+
+class MobEnemy {
+    - score:int
+    + MobEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
+    + forward():void
+    + shoot():List<BaseBullet>
+    + getScore():int
+    + getItem():List<AbstractItem>
+    + bombUpdate():void
+
+}
+AbstractEnemy <|-- MobEnemy
+
+
+class EliteEnemy {
+    - score:int
+    + EliteEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
+    + forward():void
+    + shoot():List<BaseBullet>
+    + getScore():int
+    + getItem():List<AbstractItem>
+    + bombUpdate():void
+}
+
+AbstractEnemy <|-- EliteEnemy
+
+class BossEnemy {
+    - score:int
+    + BossEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
+    + forward():void
+    + shoot():List<BaseBullet>
+    + getScore():int
+    + getItem():List<AbstractItem>
+    + bombUpdate():void
+}
+
+AbstractEnemy <|-- BossEnemy
+
+
+
+
+
+abstract class BaseBullet
+{
+    - power:int
+    + BaseBullet(int locationX, int locationY, int speedX, int speedY, int power)
+    + forward():void
+	+ getPower():int
+
+}
+
+class HeroBullet {
+    + HeroBullet(int locationX, int locationY,
+     int speedX, int speedY, int power)
+}
+
+class EnemyBullet {
+    + EnemyBullet(int locationX, int locationY,
+     int speedX, int speedY, int power)
+     + update():void
+}
+
+
+abstract class AbstractItem
+{
+    + AbstractItem(int locationX, int locationY, int speedX, int speedY)
+    + {abstract} effect(HeroAircraft heroAircraft):void
+ }
+
+class AddHpItem {
+    + AddHpItem(int locationX, int locationY, int speedX, int speedY)
+    + effect(HeroAircraft heroAircraft):void
+    + forward():void
+}
+
+class BulletItem {
+    + BulletItem(int locationX, int locationY, int speedX, int speedY)
+    + effect(HeroAircraft heroAircraft):void
+    + forward():void
+}
+
+class BoomItem {
+    - subscribers :List<BombSubscriber>
+    + BoomItem(int locationX, int locationY, int speedX, int speedY)
+    + effect(HeroAircraft heroAircraft):void
+    + forward():void
+    + subscribe(BombSubscriber subscriber):void
+    + notifySubscribers()
+}
+
+BaseBullet <|-- HeroBullet
+BaseBullet <|-- EnemyBullet
+
+AbstractItem <|--AddHpItem
+AbstractItem <|--BulletItem
+AbstractItem <|--BoomItem
+
+AbstractFlyingObject <|-- AbstractAircraft
+AbstractFlyingObject <|-- BaseBullet
+AbstractFlyingObject <|-- AbstractItem
+
+
+@enduml

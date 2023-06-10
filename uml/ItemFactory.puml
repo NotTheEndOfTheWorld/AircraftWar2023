@@ -1,0 +1,78 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+
+abstract class AbstractItem
+{
+    + AbstractItem(int locationX, int locationY, int speedX, int speedY)
+    + {abstract} effect(HeroAircraft heroAircraft):void
+ }
+
+class AddHpItem {
+    + AddHpItem(int locationX, int locationY, int speedX, int speedY)
+    + effect(HeroAircraft heroAircraft):void
+    + forward():void
+}
+
+class BulletItem {
+    + BulletItem(int locationX, int locationY, int speedX, int speedY)
+    + effect(HeroAircraft heroAircraft):void
+    + forward():void
+}
+
+class BoomItem {
+    - subscribers :List<BombSubscriber>
+    + BoomItem(int locationX, int locationY, int speedX, int speedY)
+    + effect(HeroAircraft heroAircraft):void
+    + forward():void
+    + subscribe(BombSubscriber subscriber):void
+    + notifySubscribers()
+}
+
+
+AbstractItem <|--AddHpItem
+AbstractItem <|--BulletItem
+AbstractItem <|--BoomItem
+
+
+interface ItemFactory{
+    +creatItem(int locationX, int locationY, int speedX, int speedY):AbstractItem
+}
+
+
+class AddHpItemFactory{
+    +creatItem(int locationX, int locationY, int speedX, int speedY):AbstractItem
+}
+AddHpItemFactory..> AddHpItem
+ItemFactory <|.. AddHpItemFactory
+
+
+class BoomItemFactory{
+    +creatItem(int locationX, int locationY, int speedX, int speedY):AbstractItem
+}
+BoomItemFactory..> BoomItem
+ItemFactory <|.. BoomItemFactory
+
+class  BulletItemFactory{
+    +creatItem(int locationX, int locationY, int speedX, int speedY):AbstractItem
+}
+BulletItemFactory..> BulletItem
+ItemFactory <|.. BulletItemFactory
+
+
+class HeroAircraft {
+    - {static}heroAircraft:HeroAircraft
+    - bulletThread:Thread
+    - fireItemCount:int
+    - updateFirePerItem:int
+    - shootNum:int
+    - HeroAircraft(int locationX, int locationY, int speedX, int speedY, int hp)
+    + {static} getHeroAircraft():HeroAircraft
+    + forward():void
+    + shoot():List<BaseBullet>
+    + increaseHp(int addHp):void
+    + Bomb():void
+    + Bullet():void
+}
+AbstractItem..> HeroAircraft
+@enduml
